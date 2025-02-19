@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 const API_PATH = import.meta.env.VITE_API_PATH;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export default function ProductModal({ closeProductModal,getProducts}) {
+export default function ProductModal({ closeProductModal,getProducts,type, tempProduct}) {
   const [tempData, setTempData] = useState({
     title: '',
     category: '',
@@ -15,25 +15,27 @@ export default function ProductModal({ closeProductModal,getProducts}) {
     is_enabled: 1,
     imageUrl: '',
   });
+
 //   const [, dispatch] = useContext(MessageContext)
 
-//   useEffect(() => {
-//     if (type === 'create') {
-//       setTempData({
-//         title: '',
-//         category: '',
-//         origin_price: 100,
-//         price: 300,
-//         unit: '',
-//         description: '',
-//         content: '',
-//         is_enabled: 1,
-//         imageUrl: '',
-//       });
-//     } else if (type === 'edit') {
-//       setTempData(tempProduct);
-//     }
-//   }, [type, tempProduct]);
+// 判斷開啟modal的種類
+  useEffect(() => {
+    if (type === 'create') {
+      setTempData({
+        title: '',
+        category: '',
+        origin_price: 100,
+        price: 300,
+        unit: '',
+        description: '',
+        content: '',
+        is_enabled: 1,
+        imageUrl: '',
+      });
+    } else if (type === 'edit') {
+      setTempData(tempProduct);
+    }
+  }, [type, tempProduct]);
 
 // 轉換型別並寫入TempData
   const handleChange = (e) => {
@@ -55,24 +57,27 @@ export default function ProductModal({ closeProductModal,getProducts}) {
       });
     }
   };
-
+// 依照開啟modal種類來選擇使用的API
   const submit = async () => {
     try {
-        const respone = await axios.post(`${BASE_URL}/v2/api/${API_PATH}/admin/product`,{
-            data: tempData,
-        })
-    //   if (type === 'edit') {
-    //     api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${tempProduct.id}`;
-    //     method = 'put';
-    //   }
-      console.log(respone);
-    //   handleSuccessMessage(dispatch, res);
-        closeProductModal(); //關閉modal
-        getProducts();  //取得資料
-        
+      // 新增API
+      let api = `v2/api/${API_PATH}/admin/product`;
+      let method = 'post';
+      // 編輯API
+      if (type === 'edit') {
+        api = `v2/api/${API_PATH}/admin/product/${tempProduct.id}`;
+        method = 'put';
+        console.log(api,method)
+      }
+      const res = await axios[method](`${BASE_URL}/${api}`,{ data: tempData, }, ); //API獲取
+
+      console.log(res);
+      // handleSuccessMessage(dispatch, res);
+      closeProductModal();
+      getProducts();
     } catch (error) {
       console.log(error);
-    //   handleErrorMessage(dispatch, error);
+      // handleErrorMessage(dispatch, error);
     }
   };
 
@@ -82,7 +87,7 @@ export default function ProductModal({ closeProductModal,getProducts}) {
         <div className='modal-content'>
           <div className='modal-header'>
             <h1 className='modal-title fs-5' id='exampleModalLabel'>
-              {/* { type === 'create' ? '建立新商品' : `編輯 ${tempData.title}`} */}
+              { type === 'create' ? '建立新商品' : `編輯 ${tempData.title}`}
             </h1>
             <button
               type='button'
@@ -116,7 +121,7 @@ export default function ProductModal({ closeProductModal,getProducts}) {
                     />
                   </label>
                 </div>
-                <img src='' alt='' className='img-fluid' />
+                <img src='null' alt='' className='img-fluid' />
               </div>
               <div className='col-sm-8'>
                 <div className='form-group mb-2'>
@@ -231,7 +236,7 @@ export default function ProductModal({ closeProductModal,getProducts}) {
                         placeholder='請輸入產品說明內容'
                         className='form-check-input'
                         onChange={handleChange}
-                        // checked={!!tempData.is_enabled}
+                        checked={Boolean(tempData.is_enabled)} //也可寫成{!!tempData.is_enabled}
                       />
                     </label>
                   </div>
