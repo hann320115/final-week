@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import { MessageContext,handleSuccessMessage ,handleErrorMessage } from "../store/messageStore";
 const API_PATH = import.meta.env.VITE_API_PATH;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 
 export default function ProductModal({ closeProductModal,getProducts,type, tempProduct}) {
   const [tempData, setTempData] = useState({
@@ -15,8 +17,8 @@ export default function ProductModal({ closeProductModal,getProducts,type, tempP
     is_enabled: 1,
     imageUrl: '',
   });
-
-//   const [, dispatch] = useContext(MessageContext)
+// message跨元件存取
+  const [, dispatch] = useContext(MessageContext);
 
 // 判斷開啟modal的種類
   useEffect(() => {
@@ -70,14 +72,13 @@ export default function ProductModal({ closeProductModal,getProducts,type, tempP
         console.log(api,method)
       }
       const res = await axios[method](`${BASE_URL}/${api}`,{ data: tempData, }, ); //API獲取
-
-      console.log(res);
+      handleSuccessMessage(dispatch, res);
       // handleSuccessMessage(dispatch, res);
       closeProductModal();
       getProducts();
     } catch (error) {
       console.log(error);
-      // handleErrorMessage(dispatch, error);
+      handleErrorMessage(dispatch, error);
     }
   };
 
@@ -261,4 +262,7 @@ export default function ProductModal({ closeProductModal,getProducts,type, tempP
     </div>
   );
 }
+
+
+
 
