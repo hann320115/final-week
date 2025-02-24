@@ -2,20 +2,23 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import Pagination from "../../components/Pagination";
 import { Link } from "react-router-dom";
+import Loading from "../../components/Loading";
 const API_PATH = import.meta.env.VITE_API_PATH;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export default function Products(){
     const [products, setProducts] = useState([]);
     const [pagination, setPagination] = useState({});
+    const [isLoading, setLoading] = useState(false);
       // 取得產品
     const getProducts = async (page = 1) => {
         //page=1 若page無參數會帶入預設值1
         try {
-        const respone = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/products?page=${page}`);
+            setLoading(true);
+            const respone = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/products?page=${page}`);
             setProducts(respone.data.products);
             setPagination(respone.data.pagination);
-            console.log(respone.data.products);
+            setLoading(false);
         } catch (error) {
             alert("取得商品失敗");
             console.log(error)
@@ -28,6 +31,9 @@ export default function Products(){
 
     return(<>
         <div className="container mt-md-5 mt-3 mb-7">
+            {/* 讀取效果 */}
+            <Loading isLoading={isLoading} />
+
             <div className="row">
                 {products.map((product)=>{
                     return(

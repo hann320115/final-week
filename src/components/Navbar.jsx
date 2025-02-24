@@ -2,7 +2,8 @@ import { Link } from "react-router-dom"
 
 
 
-export default function Navbar(){
+export default function Navbar({cartData}){
+
     return(<>
       <div className="bg-white sticky-top">
         <div className="container">
@@ -22,8 +23,11 @@ export default function Navbar(){
               </ul>
             </div>
             <div className="d-flex">
-              <Link to="/" className="nav-link">
+              <Link to="/cart" className="nav-link position-relative">
                 <i className="bi bi-cart3"></i>
+                <span className='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+                  {cartData?.carts?.length}
+                </span>
               </Link>
             </div>
           </nav>
