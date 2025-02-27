@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux";
 import { useOutletContext, useParams } from "react-router-dom";
+import { createAsyncMessage } from "../../slice/messageSlice";
 const API_PATH = import.meta.env.VITE_API_PATH;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -8,6 +10,7 @@ export default function ProductDetail(){
     const [product, setProduct] = useState({});
     const {id} = useParams();
     const { getCart } = useOutletContext(); //傳入 Navbar 的購物車資料
+    const dispatch = useDispatch();
 
     // 取得產品
     const getProduct = async () => {
@@ -40,11 +43,12 @@ export default function ProductDetail(){
                 data,
             );
             console.log(res)
+            dispatch(createAsyncMessage(res.data)); //代入錯誤訊息
             getCart();
             setIsLoading(false)
         } catch (error) {
-            console.log(error);
             setIsLoading(false);
+            dispatch(createAsyncMessage(error.response.data)); //代入錯誤訊息
         }
     }
     // 

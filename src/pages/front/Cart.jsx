@@ -3,11 +3,13 @@ import { useState } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
 const API_PATH = import.meta.env.VITE_API_PATH;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { useDispatch } from "react-redux";
+import { createAsyncMessage } from "../../slice/messageSlice";
 
 function Cart() {
     const { cartData, getCart } = useOutletContext(); // 取得購物車資料 + 重新渲染
     const [loadingItems, setLoadingItem] = useState([]);
-
+    const dispatch = useDispatch();
     // 刪除品項
     const removeCartItem = async (id) => {
         try {
@@ -26,18 +28,18 @@ function Cart() {
                 qty: quantity,
             },
         };
-        setLoadingItem([...loadingItems, item.id]); //這段要請AI大大解釋
+        setLoadingItem([...loadingItems, item.id]);
         try {
             const res = await axios.put(`${BASE_URL}/v2/api/${API_PATH}/cart/${item.id}`,
                 data,
             );
-            console.log(res);
             setLoadingItem(
                 loadingItems.filter((loadingObject) => loadingObject !== item.id),
-            );//這段要請AI大大解釋
+            );
+            dispatch(createAsyncMessage(res.data)); //代入錯誤訊息
             getCart();
         } catch (error) {
-            console.log(error);
+            dispatch(createAsyncMessage(error.response.data)); //代入錯誤訊息
         }
     };
 

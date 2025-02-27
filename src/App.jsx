@@ -12,13 +12,7 @@ import Cart from './pages/front/Cart';
 import Checkout from './pages/front/Checkout';
 import Success from './pages/front/Success';
 
-
-
-
-
-
-
-function App() {
+export default function App() {
 
   return (
     <>
@@ -48,4 +42,3 @@ function App() {
   )
 }
 
-export default App

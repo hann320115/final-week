@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 const API_PATH = import.meta.env.VITE_API_PATH;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
+import MessageToast from '../../components/MessageToast';
 
 export default function FrontLayout(){
     const [cartData, setCartData] = useState({});
@@ -23,6 +24,7 @@ export default function FrontLayout(){
 
     return(<>
         <Navbar cartData={cartData} />
+        <MessageToast />
         <Outlet context={{getCart ,cartData,setCartData }}></Outlet> {/*以物件方式傳入購物車資料*/ }
         <div className="bg-dark">
             <div className="container">
