@@ -2,13 +2,11 @@ import { createContext } from "react";
 
 // useContext 跨元件傳遞
 export const MessageContext = createContext({})
-
 export const initState = {
   type: '',
   title: '',
   text: '',
 };
-
 // Reducer
 export const messageReducer = (state, action) => {
   switch (action.type) {
@@ -26,6 +24,10 @@ export const messageReducer = (state, action) => {
 }
 
 
+
+
+
+// 解構-------------------------------------------------
 export function handleSuccessMessage(dispatch, res) {
     dispatch({
       type: "POST_MESSAGE",
@@ -41,7 +43,6 @@ export function handleSuccessMessage(dispatch, res) {
         });
     }, 2000);
 }
-
 export function handleErrorMessage(dispatch, error) {
     dispatch({
       type: "POST_MESSAGE",

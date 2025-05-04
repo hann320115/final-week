@@ -14,10 +14,9 @@ function Cart() {
     const removeCartItem = async (id) => {
         try {
             const res = await axios.delete(`${BASE_URL}/v2/api/${API_PATH}/cart/${id}`);
-            console.log(res);
             getCart();
-        } catch (error) {
-            console.log(error);
+        } catch{
+            alert("刪除失敗")
         }
     };
     // 修改購物車商品數量

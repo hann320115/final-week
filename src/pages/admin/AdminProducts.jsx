@@ -30,8 +30,7 @@ export default function AdminProducts() {
       );
       setProducts(respone.data.products);
       setPagination(respone.data.pagination);
-      console.log(respone.data);
-    } catch (error) {
+    } catch{
       alert("取得商品失敗");
     }
   };
@@ -80,7 +79,7 @@ export default function AdminProducts() {
         deleteModal.current.hide();
       }
     } catch (error) {
-      console.log(error);
+      alert(error.response.data.message)
       //   handleErrorMessage(dispatch, error);
     }
   };

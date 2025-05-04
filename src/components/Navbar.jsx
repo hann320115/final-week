@@ -20,6 +20,9 @@ export default function Navbar({cartData}){
                 <li className="nav-item active">
                   <Link className="nav-link ps-0" to="products">產品列表</Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link ps-0" to="login">管理員登入</Link>
+                </li>
               </ul>
             </div>
             <div className="d-flex">

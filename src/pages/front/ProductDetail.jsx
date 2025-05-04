@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
-import { useOutletContext, useParams } from "react-router-dom";
 import { createAsyncMessage } from "../../slice/messageSlice";
+import { useOutletContext, useParams } from "react-router-dom";
 const API_PATH = import.meta.env.VITE_API_PATH;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -24,7 +24,6 @@ export default function ProductDetail(){
     useEffect(()=>{
         getProduct(id);
     },[id])
-
     // 讀取效果 - (加入購物車時按鈕禁用)
     const [isLoading, setIsLoading] = useState(false)
     // 購物車數量
@@ -42,7 +41,6 @@ export default function ProductDetail(){
             const res = await axios.post(`${BASE_URL}/v2/api/${API_PATH}/cart`,
                 data,
             );
-            console.log(res)
             dispatch(createAsyncMessage(res.data)); //代入錯誤訊息
             getCart();
             setIsLoading(false)
@@ -51,10 +49,6 @@ export default function ProductDetail(){
             dispatch(createAsyncMessage(error.response.data)); //代入錯誤訊息
         }
     }
-    // 
-    
-
-
     return(<>
         <div className="container">
             <div className="object-cover" style={{ minHeight: "400px", backgroundImage: `url(${product.imageUrl})`,

@@ -66,14 +66,14 @@ export default function AdminCoupons() {
   const deleteCoupons = async (id) => {
     try {
       const res = await axios.delete(
-        `${BASE_URL}/v2/api/${API_PATH}/admin/coupon/${id}`
+        `${BASE_URL}/v2/api/${API_PATH}/admin/coupon/${id}+1`
       );
       if (res.data.success) {
         getCoupons();
         deleteModal.current.hide();
       }
     } catch (error) {
-      console.log(error);
+      alert(error.response.data.message)
     }
   };
 

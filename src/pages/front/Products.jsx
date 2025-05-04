@@ -21,7 +21,6 @@ export default function Products(){
             setLoading(false);
         } catch (error) {
             alert("取得商品失敗");
-            console.log(error)
         }
     };
     useEffect(()=>{

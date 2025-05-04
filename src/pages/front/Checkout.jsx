@@ -36,8 +36,8 @@ const onSubmit = async (data) => {
         const res = await axios.post(`${BASE_URL}/v2/api/${API_PATH}/order`, form);
         setCartData({ carts: [], final_total: 0 }); //清空購物車
         navigate(`/success/${res.data.orderId}`); //付款成功轉到"付款成功"頁面
-    } catch (error) {
-        console.log(error);
+    } catch{
+        alert("送出表單失敗")
     }
 };
 

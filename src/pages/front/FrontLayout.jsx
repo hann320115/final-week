@@ -12,10 +12,9 @@ export default function FrontLayout(){
     const getCart = async () => {
         try {
             const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/cart`);
-            console.log(res);
             setCartData(res.data.data)
-        } catch (error) {
-            console.log(error);
+        } catch{
+            alert("取得購物車失敗")
         }
     }
     useEffect(() => {

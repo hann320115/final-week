@@ -73,11 +73,9 @@ const submit = async () => {
         },
       },
     );
-    console.log(res);
     closeModal();
     getCoupons();
-  } catch (error) {
-    console.log(error);
+  } catch{
   }
 };
 

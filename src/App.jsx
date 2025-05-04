@@ -34,7 +34,6 @@ export default function App() {
           <Route path="coupons" element={<AdminCoupons/>}></Route>
           <Route path="orders" element={<AdminOrders/>}></Route>
         </Route>
-
       </Routes>
     </div>
 

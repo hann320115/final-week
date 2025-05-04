@@ -69,15 +69,12 @@ export default function ProductModal({ closeProductModal,getProducts,type, tempP
       if (type === 'edit') {
         api = `v2/api/${API_PATH}/admin/product/${tempProduct.id}`;
         method = 'put';
-        console.log(api,method)
       }
       const res = await axios[method](`${BASE_URL}/${api}`,{ data: tempData, }, ); //API獲取
       handleSuccessMessage(dispatch, res);
-      // handleSuccessMessage(dispatch, res);
       closeProductModal();
       getProducts();
     } catch (error) {
-      console.log(error);
       handleErrorMessage(dispatch, error);
     }
   };

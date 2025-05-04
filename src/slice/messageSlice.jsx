@@ -1,6 +1,5 @@
+//       redux非同步使用     redux必用
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-
 
 export const messageSlice =  createSlice({
     name:'message',
@@ -32,13 +31,13 @@ export const messageSlice =  createSlice({
             const index = state.findIndex(item => item === action.payload) //判斷若id為當前id
             state.splice(index,1);
         },
-
     }
-})
+}) 
 
 // 使用createAsyncThunk觸發上方的createMessage 可以執行非同步(如：setTimeout)
 export const createAsyncMessage = createAsyncThunk(
     'message/createAsyncMessage',
+        //          傳入的值   上面的function
     async function (payload,{dispatch,requestId}){
         dispatch(messageSlice.actions.createMessage({
             ...payload,

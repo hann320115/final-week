@@ -43,12 +43,10 @@ function ProductModal({ closeProductModal, getOrders, tempOrder }) {
           ...tempData,
         },
       });
-      console.log(res);
       handleSuccessMessage(dispatch, res);
       setIsLoading(false);
       getOrders();
     } catch (error) {
-      console.log(error);
       setIsLoading(false);
       handleErrorMessage(dispatch, error);
     }

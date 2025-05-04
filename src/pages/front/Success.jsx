@@ -16,7 +16,7 @@ export default function Success() {
             const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/order/${orderId}`);
             setOrderData(res.data.order);
         }catch(error){
-            console.log(error)
+            alert("結帳失敗");
         }
     };
 
